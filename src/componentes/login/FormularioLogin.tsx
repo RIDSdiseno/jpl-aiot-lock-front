@@ -33,8 +33,8 @@ export function FormularioLogin() {
 
   return (
     <form onSubmit={enviar} className="space-y-4">
-      <CampoTexto etiqueta="Usuario" placeholder="JPL" autoComplete="username" {...form.register("email")} error={form.formState.errors.email?.message} />
-      <CampoTexto etiqueta="Contrasena" type="password" placeholder="123456" autoComplete="current-password" {...form.register("password")} error={form.formState.errors.password?.message} />
+      <CampoTexto etiqueta="Nombre de usuario" placeholder="Ingrese su nombre de usuario" autoComplete="username" {...form.register("email")} error={form.formState.errors.email?.message} />
+      <CampoTexto etiqueta="Contraseña" type="password" placeholder="Ingrese su contraseña" autoComplete="current-password" {...form.register("password")} error={form.formState.errors.password?.message} />
       <div className="grid grid-cols-[120px_1fr] gap-3">
         <CajaCaptcha onCodigo={registrarCodigo} />
         <CampoTexto placeholder="Captcha" {...form.register("captcha")} error={form.formState.errors.captcha?.message ?? errorCaptcha} />
@@ -44,7 +44,7 @@ export function FormularioLogin() {
       <Boton className="w-full" disabled={loginMutation.isPending} icono={loginMutation.isPending ? undefined : <LogIn className="h-4 w-4" />}>
         {loginMutation.isPending ? "Iniciando sesion..." : "Iniciar sesion"}
       </Boton>
-      <div className="flex items-center justify-center gap-2 text-xs text-slate-400">
+      <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
         <Lock className="h-3.5 w-3.5" />
         Acceso seguro mediante token Bearer
       </div>
