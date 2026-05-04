@@ -25,7 +25,7 @@ const items = [
   { label: "GIS / Mapa", to: "/app/gis", icon: Map },
   { label: "Alertas", to: "/app/alertas", icon: AlertTriangle },
   { label: "Reportes", to: "/app/reportes", icon: BarChart3 },
-  { label: "Auditoría", to: "/app/auditoria", icon: ClipboardList },
+  { label: "Auditoria", to: "/app/auditoria", icon: ClipboardList },
   { label: "Dispositivos", to: "/app/dispositivos", icon: Cpu },
   { label: "Candados inteligentes", to: "/app/candados", icon: LockKeyhole },
   { label: "Mantenimiento", to: "/app/mantenimiento", icon: Settings },

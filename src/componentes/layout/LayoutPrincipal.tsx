@@ -1,8 +1,18 @@
+import { useEffect } from "react";
 import { Outlet } from "react-router-dom";
+import { useAutenticacionStore } from "../../modulos/autenticacion/store/autenticacion.store";
 import { BarraLateral } from "./BarraLateral";
 import { BarraSuperior } from "./BarraSuperior";
 
 export function LayoutPrincipal() {
+  const { accessToken, usuario, cargarUsuarioActual } = useAutenticacionStore();
+
+  useEffect(() => {
+    if (accessToken && !usuario) {
+      void cargarUsuarioActual();
+    }
+  }, [accessToken, cargarUsuarioActual, usuario]);
+
   return (
     <div className="min-h-screen bg-slate-100">
       <BarraLateral />

@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useAutenticacionStore } from "../store/autenticacion.store";
-import { login, obtenerUsuarioActual } from "../servicios/autenticacion.service";
+import { iniciarSesion, obtenerUsuarioActual } from "../servicios/autenticacion.service";
 
 export function useAutenticacion() {
   const store = useAutenticacionStore();
@@ -12,7 +12,7 @@ export function useAutenticacion() {
   });
 
   const loginMutation = useMutation({
-    mutationFn: login,
+    mutationFn: iniciarSesion,
     onSuccess: (respuesta) => {
       store.establecerSesion(respuesta.accessToken, respuesta.user);
     },

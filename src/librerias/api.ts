@@ -4,6 +4,7 @@ import { almacenamiento } from "./almacenamiento";
 export const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3001/api",
   timeout: 30000,
+  withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
@@ -27,10 +28,13 @@ api.interceptors.response.use(
   }
 );
 
-export function extraerDatos<T>(respuesta: { data: T | { data?: T } }): T {
-  const payload = respuesta.data as T | { data?: T };
+export function extraerDatos<T>(respuesta: { data: T | { data?: T; user?: T } }): T {
+  const payload = respuesta.data as T | { data?: T; user?: T };
   if (payload && typeof payload === "object" && "data" in payload) {
     return (payload as { data?: T }).data as T;
+  }
+  if (payload && typeof payload === "object" && "user" in payload && !("accessToken" in payload)) {
+    return (payload as { user: T }).user;
   }
   return payload as T;
 }

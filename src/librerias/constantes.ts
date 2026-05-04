@@ -8,7 +8,7 @@ export const DEVICE_TYPE_LABELS: Record<DeviceType, string> = {
   SMART_LOCK: "Candado inteligente",
   SMART_SENSOR: "Sensor inteligente",
   GPS_TRACKER: "Rastreador GPS",
-  E_SEAL: "Sello electrónico",
+  E_SEAL: "Sello electronico",
   SMART_GATEWAY: "Gateway",
   SMART_BOX: "Caja inteligente",
 };
@@ -22,10 +22,10 @@ export const DEVICE_STATUS_LABELS: Record<DeviceStatus, string> = {
 };
 
 export const DEVICE_CONNECTION_STATUS_LABELS: Record<DeviceConnectionStatus, string> = {
-  ONLINE: "En línea",
-  OFFLINE: "Sin conexión",
+  ONLINE: "En linea",
+  OFFLINE: "Sin conexion",
   SLEEP: "Reposo",
-  LOST_SIGNAL: "Señal perdida",
+  LOST_SIGNAL: "Senal perdida",
   UNKNOWN: "Desconocido",
 };
 
@@ -33,5 +33,5 @@ export const ALERT_SEVERITY_LABELS: Record<string, string> = {
   LOW: "Baja",
   MEDIUM: "Media",
   HIGH: "Alta",
-  CRITICAL: "Crítica",
+  CRITICAL: "Critica",
 };
