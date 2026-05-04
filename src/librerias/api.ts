@@ -1,0 +1,36 @@
+import axios from "axios";
+import { almacenamiento } from "./almacenamiento";
+
+export const api = axios.create({
+  baseURL: import.meta.env.VITE_API_URL ?? "http://localhost:3001/api",
+  timeout: 30000,
+});
+
+api.interceptors.request.use((config) => {
+  const token = almacenamiento.obtenerToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      almacenamiento.borrarToken();
+      if (window.location.pathname !== "/login") {
+        window.location.assign("/login");
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+export function extraerDatos<T>(respuesta: { data: T | { data?: T } }): T {
+  const payload = respuesta.data as T | { data?: T };
+  if (payload && typeof payload === "object" && "data" in payload) {
+    return (payload as { data?: T }).data as T;
+  }
+  return payload as T;
+}
