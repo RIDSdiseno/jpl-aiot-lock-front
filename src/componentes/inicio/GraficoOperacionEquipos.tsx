@@ -10,8 +10,8 @@ export function GraficoOperacionEquipos({ datos }: { datos: ResumenConexion[] })
   return (
     <Tarjeta>
       <h2 className="mb-4 font-semibold text-slate-900">Ratio de operación de equipos</h2>
-      <div className="h-72">
-        <ResponsiveContainer>
+      <div className="h-[280px] min-h-[280px] w-full min-w-0">
+        <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie data={data} innerRadius={70} outerRadius={105} dataKey="value" nameKey="name" paddingAngle={3}>
               {data.map((_, index) => <Cell key={index} fill={colores[index % colores.length]} />)}

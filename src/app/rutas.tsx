@@ -8,6 +8,7 @@ import { PaginaDetalleDispositivo } from "../modulos/dispositivos/paginas/Pagina
 import { PaginaCandadosInteligentes } from "../modulos/dispositivos/paginas/PaginaCandadosInteligentes";
 import { PaginaEventos } from "../modulos/eventos/paginas/PaginaEventos";
 import { PaginaMapa } from "../modulos/gis/paginas/PaginaMapa";
+import { MonitoringPage } from "../pages/monitoring/MonitoringPage";
 import { PaginaAlertas } from "../modulos/alertas/paginas/PaginaAlertas";
 import { PaginaAuditoria } from "../modulos/auditoria/paginas/PaginaAuditoria";
 import { PaginaReportes } from "../modulos/reportes/paginas/PaginaReportes";
@@ -40,7 +41,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Navigate to="/app/inicio" replace /> },
       { path: "inicio", element: <PaginaInicio /> },
-      { path: "monitoreo", element: <PaginaSimple titulo="Monitoreo" /> },
+      { path: "monitoreo", element: <MonitoringPage /> },
       { path: "control", element: <PaginaSimple titulo="Control" /> },
       { path: "eventos", element: <PaginaEventos /> },
       { path: "gis", element: <PaginaMapa /> },

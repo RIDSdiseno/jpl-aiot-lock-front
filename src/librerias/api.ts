@@ -1,7 +1,7 @@
 import axios from "axios";
 import { almacenamiento } from "./almacenamiento";
 
-const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:3000").trim().replace(/\/+$/, "");
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:3000/api").trim().replace(/\/+$/, "");
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -10,7 +10,13 @@ export const api = axios.create({
 });
 
 api.interceptors.request.use((config) => {
-  if (config.url?.startsWith("/") && !config.url.startsWith("/api/")) {
+  const baseIncludesApi = config.baseURL?.replace(/\/+$/, "").endsWith("/api") ?? false;
+
+  if (config.url?.startsWith("/api/") && baseIncludesApi) {
+    config.url = config.url.replace(/^\/api/, "");
+  }
+
+  if (config.url?.startsWith("/") && !config.url.startsWith("/api/") && !baseIncludesApi) {
     config.url = `/api${config.url}`;
   }
 
