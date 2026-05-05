@@ -1,5 +1,17 @@
 # React + TypeScript + Vite
 
+## Netlify
+
+Configure esta variable en Netlify:
+
+```env
+VITE_API_URL=https://TU-BACKEND.up.railway.app/api
+```
+
+No configure `JWT_SECRET` ni `JWT_REFRESH_SECRET` en Netlify. Esos secretos pertenecen solo al backend en Railway.
+
+El archivo `public/_redirects` permite que rutas SPA como `/login` funcionen al recargar o abrir la URL directamente en Netlify.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:
