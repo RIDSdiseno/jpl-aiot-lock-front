@@ -1,20 +1,19 @@
 import axios from "axios";
 import { almacenamiento } from "./almacenamiento";
 
-function obtenerBaseApi() {
-  const baseUrl = import.meta.env.VITE_API_URL ?? "http://localhost:3001/api";
-  const normalizedBaseUrl = baseUrl.trim().replace(/\/+$/, "");
-
-  return normalizedBaseUrl.endsWith("/api") ? normalizedBaseUrl : `${normalizedBaseUrl}/api`;
-}
+const API_URL = (import.meta.env.VITE_API_URL || "http://localhost:3000").trim().replace(/\/+$/, "");
 
 export const api = axios.create({
-  baseURL: obtenerBaseApi(),
+  baseURL: API_URL,
   timeout: 30000,
   withCredentials: true,
 });
 
 api.interceptors.request.use((config) => {
+  if (config.url?.startsWith("/") && !config.url.startsWith("/api/")) {
+    config.url = `/api${config.url}`;
+  }
+
   const token = almacenamiento.obtenerToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;

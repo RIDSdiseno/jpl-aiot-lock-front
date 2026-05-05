@@ -5,7 +5,7 @@
 Configure esta variable en Netlify:
 
 ```env
-VITE_API_URL=https://TU-BACKEND.up.railway.app/api
+VITE_API_URL=https://jpl-aiot-lock-back-production.up.railway.app
 ```
 
 No configure `JWT_SECRET` ni `JWT_REFRESH_SECRET` en Netlify. Esos secretos pertenecen solo al backend en Railway.
