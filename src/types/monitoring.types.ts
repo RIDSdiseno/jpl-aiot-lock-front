@@ -1,5 +1,6 @@
 export type MonitoringStatus = "online" | "offline" | "alarm";
 export type MonitoringStatusFilter = "all" | "online" | "offline" | "alarm";
+export type MonitoringDeviceStatus = "ONLINE" | "OFFLINE" | "ALARM";
 
 export interface MonitoringDevice {
   id: string;
@@ -8,8 +9,15 @@ export interface MonitoringDevice {
   companyId: string;
   companyName: string;
   status: MonitoringStatus;
+  isOnline?: boolean;
+  hasActiveAlarm?: boolean;
+  alarmType?: string | null;
+  model?: string;
+  type?: string;
   battery: number;
   signal: number;
+  batteryLevel?: number;
+  signalLevel?: number;
   latitude: number;
   longitude: number;
   connectionMode: string;
@@ -23,18 +31,30 @@ export interface MonitoringDevice {
   positioningTime: string;
   location: string;
   lastSeenAt: string;
+  lastConnectionAt?: string;
+  lastPositioningAt?: string;
+}
+
+export interface MonitoringCompanyGroup {
+  companyId: string;
+  companyName: string;
+  devices: MonitoringDevice[];
 }
 
 export interface MonitoringGeoFence {
   id: string;
   name: string;
-  companyId: string;
-  companyName: string;
-  type: "circle";
-  centerLat: number;
-  centerLng: number;
-  radiusMt: number;
-  isActive: boolean;
+  companyId?: string;
+  companyName?: string;
+  type?: "circle";
+  shapeType?: "CIRCLE" | "POLYGON";
+  centerLat?: number;
+  centerLng?: number;
+  radiusMt?: number;
+  radiusMeters?: number;
+  coordinates?: Array<{ lat: number; lng: number }>;
+  isActive?: boolean;
+  status?: "ACTIVE" | "INACTIVE";
 }
 
 export interface MonitoringTrajectoryPoint {
@@ -77,10 +97,12 @@ export interface NfcCard {
 
 export interface DevicesResponse {
   ok: boolean;
-  devices: MonitoringDevice[];
+  devices?: MonitoringDevice[];
+  data?: MonitoringDevice[] | MonitoringCompanyGroup[];
 }
 
 export interface GeofencesResponse {
   ok: boolean;
-  geofences: MonitoringGeoFence[];
+  geofences?: MonitoringGeoFence[];
+  data?: MonitoringGeoFence[];
 }

@@ -2,13 +2,19 @@ import { createBrowserRouter, Navigate } from "react-router-dom";
 import { LayoutPrincipal } from "../componentes/layout/LayoutPrincipal";
 import { almacenamiento } from "../librerias/almacenamiento";
 import { PaginaLogin } from "../modulos/autenticacion/paginas/PaginaLogin";
-import { PaginaInicio } from "../modulos/inicio/paginas/PaginaInicio";
+import { DashboardPage } from "../pages/dashboard/DashboardPage";
 import { PaginaDispositivos } from "../modulos/dispositivos/paginas/PaginaDispositivos";
 import { PaginaDetalleDispositivo } from "../modulos/dispositivos/paginas/PaginaDetalleDispositivo";
 import { PaginaCandadosInteligentes } from "../modulos/dispositivos/paginas/PaginaCandadosInteligentes";
-import { PaginaEventos } from "../modulos/eventos/paginas/PaginaEventos";
 import { PaginaMapa } from "../modulos/gis/paginas/PaginaMapa";
 import { MonitoringPage } from "../pages/monitoring/MonitoringPage";
+import { CmdRecordPage } from "../pages/control/commands/CmdRecordPage";
+import { NfcPage } from "../pages/control/nfc/NfcPage";
+import { ParameterPage } from "../pages/control/parameter/ParameterPage";
+import { PasswordPage } from "../pages/control/password/PasswordPage";
+import { AlarmEventsPage } from "../pages/events/alarm-event/AlarmEventsPage";
+import { AllEventsPage } from "../pages/events/all-events/AllEventsPage";
+import { PushEventsPage } from "../pages/events/push-event/PushEventsPage";
 import { PaginaAlertas } from "../modulos/alertas/paginas/PaginaAlertas";
 import { PaginaAuditoria } from "../modulos/auditoria/paginas/PaginaAuditoria";
 import { PaginaReportes } from "../modulos/reportes/paginas/PaginaReportes";
@@ -21,29 +27,44 @@ import { PaginaEmpresas } from "../modulos/empresas/paginas/PaginaEmpresas";
 import { PaginaDetalleEmpresa } from "../modulos/empresas/paginas/PaginaDetalleEmpresa";
 import { RutaProtegida } from "../rutas/RutaProtegida";
 import { RutaPublica } from "../rutas/RutaPublica";
-import { EncabezadoPagina } from "../componentes/layout/EncabezadoPagina";
-import { EstadoVacio } from "../componentes/comunes/EstadoVacio";
 
 function RedireccionRaiz() {
   return <Navigate to={almacenamiento.obtenerToken() ? "/app/inicio" : "/login"} replace />;
 }
 
-function PaginaSimple({ titulo }: { titulo: string }) {
-  return <><EncabezadoPagina titulo={titulo} /><EstadoVacio titulo={`${titulo} listo para integrar`} /></>;
-}
-
 export const router = createBrowserRouter([
   { path: "/", element: <RedireccionRaiz /> },
+  { path: "/dashboard", element: <Navigate to="/app/dashboard" replace /> },
+  { path: "/monitoring", element: <Navigate to="/app/monitoreo" replace /> },
+  { path: "/control/nfc", element: <Navigate to="/app/control/nfc" replace /> },
+  { path: "/control/password", element: <Navigate to="/app/control/password" replace /> },
+  { path: "/control/cmd-record", element: <Navigate to="/app/control/cmd-record" replace /> },
+  { path: "/control/parameter", element: <Navigate to="/app/control/parameter" replace /> },
+  { path: "/event/all-events", element: <Navigate to="/app/event/all-events" replace /> },
+  { path: "/event/alarm-event", element: <Navigate to="/app/event/alarm-event" replace /> },
+  { path: "/event/push-event", element: <Navigate to="/app/event/push-event" replace /> },
   { path: "/login", element: <RutaPublica><PaginaLogin /></RutaPublica> },
   {
     path: "/app",
     element: <RutaProtegida><LayoutPrincipal /></RutaProtegida>,
     children: [
       { index: true, element: <Navigate to="/app/inicio" replace /> },
-      { path: "inicio", element: <PaginaInicio /> },
+      { path: "inicio", element: <DashboardPage /> },
+      { path: "dashboard", element: <DashboardPage /> },
       { path: "monitoreo", element: <MonitoringPage /> },
-      { path: "control", element: <PaginaSimple titulo="Control" /> },
-      { path: "eventos", element: <PaginaEventos /> },
+      { path: "control", element: <Navigate to="/app/control/nfc" replace /> },
+      { path: "control/nfc", element: <NfcPage /> },
+      { path: "control/password", element: <PasswordPage /> },
+      { path: "control/cmd-record", element: <CmdRecordPage /> },
+      { path: "control/parameter", element: <ParameterPage /> },
+      { path: "eventos", element: <Navigate to="/app/event/all-events" replace /> },
+      { path: "eventos/todos", element: <Navigate to="/app/event/all-events" replace /> },
+      { path: "eventos/alarmas", element: <Navigate to="/app/event/alarm-event" replace /> },
+      { path: "eventos/push", element: <Navigate to="/app/event/push-event" replace /> },
+      { path: "event", element: <Navigate to="/app/event/all-events" replace /> },
+      { path: "event/all-events", element: <AllEventsPage /> },
+      { path: "event/alarm-event", element: <AlarmEventsPage /> },
+      { path: "event/push-event", element: <PushEventsPage /> },
       { path: "gis", element: <PaginaMapa /> },
       { path: "alertas", element: <PaginaAlertas /> },
       { path: "reportes", element: <PaginaReportes /> },

@@ -73,7 +73,7 @@ export function MonitoringPage() {
             onSelectDevice={setSelectedDevice}
           />
         }
-        map={<MonitoringMap devices={devices} geofences={geofences} onSelectDevice={setSelectedDevice} onAction={openAction} />}
+        map={<MonitoringMap devices={devices} geofences={geofences} selectedDevice={selected} onSelectDevice={setSelectedDevice} onAction={openAction} />}
       />
       <SealActionModal device={selected} mode="seal" open={activeAction === "seal"} onClose={() => setActiveAction(undefined)} />
       <SealActionModal device={selected} mode="unseal" open={activeAction === "unseal"} onClose={() => setActiveAction(undefined)} />

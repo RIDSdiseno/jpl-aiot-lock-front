@@ -48,7 +48,7 @@ export function MonitoringSidebar({
           {geofences.map((fence) => (
             <div key={fence.id} className="flex items-center justify-between gap-2 text-sm text-slate-700">
               <span className="truncate">{fence.name}</span>
-              <span className="text-xs text-slate-500">{Math.round(fence.radiusMt)} m</span>
+              <span className="text-xs text-slate-500">{Math.round(fence.radiusMt ?? fence.radiusMeters ?? 0)} m</span>
             </div>
           ))}
         </div>
