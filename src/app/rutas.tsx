@@ -7,11 +7,23 @@ import { PaginaDispositivos } from "../modulos/dispositivos/paginas/PaginaDispos
 import { PaginaDetalleDispositivo } from "../modulos/dispositivos/paginas/PaginaDetalleDispositivo";
 import { PaginaCandadosInteligentes } from "../modulos/dispositivos/paginas/PaginaCandadosInteligentes";
 import { PaginaMapa } from "../modulos/gis/paginas/PaginaMapa";
+import { GeoFencePage } from "../pages/gis/GeoFencePage";
+import { FenceRecordPage } from "../pages/gis/FenceRecordPage";
+import { UserLogPage } from "../pages/audit/UserLogPage";
+import { DeviceHistoryPage } from "../pages/history/DeviceHistoryPage";
+import { DiagnosisPage } from "../pages/maintain/DiagnosisPage";
+import { FirmwarePage } from "../pages/maintain/FirmwarePage";
+import { OtaPage } from "../pages/maintain/OtaPage";
+import { OtaUpgradeRecordPage } from "../pages/maintain/OtaUpgradeRecordPage";
+import { OrganizationPage } from "../pages/user-center/OrganizationPage";
+import { PermissionPage } from "../pages/user-center/PermissionPage";
+import { UserPage } from "../pages/user-center/UserPage";
 import { MonitoringPage } from "../pages/monitoring/MonitoringPage";
 import { CmdRecordPage } from "../pages/control/commands/CmdRecordPage";
 import { NfcPage } from "../pages/control/nfc/NfcPage";
 import { ParameterPage } from "../pages/control/parameter/ParameterPage";
 import { PasswordPage } from "../pages/control/password/PasswordPage";
+import { PresetPage } from "../pages/control/preset/PresetPage";
 import { AlarmEventsPage } from "../pages/events/alarm-event/AlarmEventsPage";
 import { AllEventsPage } from "../pages/events/all-events/AllEventsPage";
 import { PushEventsPage } from "../pages/events/push-event/PushEventsPage";
@@ -39,6 +51,7 @@ export const router = createBrowserRouter([
   { path: "/control/nfc", element: <Navigate to="/app/control/nfc" replace /> },
   { path: "/control/password", element: <Navigate to="/app/control/password" replace /> },
   { path: "/control/cmd-record", element: <Navigate to="/app/control/cmd-record" replace /> },
+  { path: "/control/preset", element: <Navigate to="/app/control/preset" replace /> },
   { path: "/control/parameter", element: <Navigate to="/app/control/parameter" replace /> },
   { path: "/event/all-events", element: <Navigate to="/app/event/all-events" replace /> },
   { path: "/event/alarm-event", element: <Navigate to="/app/event/alarm-event" replace /> },
@@ -56,6 +69,7 @@ export const router = createBrowserRouter([
       { path: "control/nfc", element: <NfcPage /> },
       { path: "control/password", element: <PasswordPage /> },
       { path: "control/cmd-record", element: <CmdRecordPage /> },
+      { path: "control/preset", element: <PresetPage /> },
       { path: "control/parameter", element: <ParameterPage /> },
       { path: "eventos", element: <Navigate to="/app/event/all-events" replace /> },
       { path: "eventos/todos", element: <Navigate to="/app/event/all-events" replace /> },
@@ -66,14 +80,32 @@ export const router = createBrowserRouter([
       { path: "event/alarm-event", element: <AlarmEventsPage /> },
       { path: "event/push-event", element: <PushEventsPage /> },
       { path: "gis", element: <PaginaMapa /> },
+      { path: "gis/geofences", element: <GeoFencePage /> },
+      { path: "gis/fence-seal-unseal", element: <GeoFencePage /> },
+      { path: "gis/fence-record", element: <FenceRecordPage /> },
       { path: "alertas", element: <PaginaAlertas /> },
       { path: "reportes", element: <PaginaReportes /> },
       { path: "auditoria", element: <PaginaAuditoria /> },
+      { path: "audit", element: <UserLogPage /> },
+      { path: "user-log", element: <UserLogPage /> },
       { path: "dispositivos", element: <PaginaDispositivos /> },
       { path: "dispositivos/:dispositivoId", element: <PaginaDetalleDispositivo /> },
+      { path: "devices", element: <PaginaDispositivos /> },
+      { path: "devices/:dispositivoId", element: <PaginaDetalleDispositivo /> },
+      { path: "devices/:dispositivoId/alarm-strategy", element: <PaginaDetalleDispositivo /> },
       { path: "candados", element: <PaginaCandadosInteligentes /> },
       { path: "mantenimiento", element: <PaginaMantenimiento /> },
+      { path: "maintain", element: <Navigate to="/app/maintain/firmware" replace /> },
+      { path: "maintain/firmware", element: <FirmwarePage /> },
+      { path: "maintain/ota", element: <OtaPage /> },
+      { path: "maintain/ota/records", element: <OtaUpgradeRecordPage /> },
+      { path: "maintain/diagnosis", element: <DiagnosisPage /> },
       { path: "historial", element: <PaginaHistorial /> },
+      { path: "history", element: <DeviceHistoryPage /> },
+      { path: "user-center", element: <Navigate to="/app/user-center/organization" replace /> },
+      { path: "user-center/organization", element: <OrganizationPage /> },
+      { path: "user-center/permission", element: <PermissionPage /> },
+      { path: "user-center/users", element: <UserPage /> },
       { path: "usuarios", element: <PaginaUsuarios /> },
       { path: "usuarios/:usuarioId", element: <PaginaDetalleUsuario /> },
       { path: "roles-permisos", element: <PaginaRolesPermisos /> },

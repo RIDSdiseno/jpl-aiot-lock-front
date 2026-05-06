@@ -27,7 +27,12 @@ function CmdRecordContent({ selectedDevice }: { selectedDevice?: ControlDevice }
           setFilters({});
         }}
       />
-      <CmdRecordTable records={records.recordsQuery.data ?? []} onCancel={(id) => records.cancel.mutate(id)} />
+      <CmdRecordTable
+        records={records.recordsQuery.data ?? []}
+        onCancel={(id) => records.cancel.mutate(id)}
+        onResend={(id) => records.resend.mutate(id)}
+        onDelete={(id) => records.remove.mutate(id)}
+      />
     </>
   );
 }

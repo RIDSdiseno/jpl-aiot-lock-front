@@ -1,10 +1,4 @@
-export type DeviceType =
-  | "SMART_LOCK"
-  | "SMART_SENSOR"
-  | "GPS_TRACKER"
-  | "E_SEAL"
-  | "SMART_GATEWAY"
-  | "SMART_BOX";
+export type DeviceType = string;
 
 export type DeviceStatus =
   | "ACTIVE"
@@ -33,18 +27,33 @@ export type DeviceConnectionType =
 export interface Dispositivo {
   id: string;
   name: string;
+  deviceName?: string;
+  deviceId?: string;
   internalCode: string;
   serialNumber?: string | null;
   imei?: string | null;
   macAddress?: string | null;
+  simNumber?: string | null;
+  iccid?: string | null;
   type: DeviceType;
+  deviceType?: string;
+  productModel?: string;
+  affiliatedCompany?: string | null;
+  affiliatedCompanyId?: string | null;
   status: DeviceStatus;
+  onlineStatus?: string;
   connectionStatus: DeviceConnectionStatus;
   connectionType: DeviceConnectionType;
   batteryLevel?: number | null;
   signalLevel?: number | null;
+  signalStrength?: number | null;
   firmwareVersion?: string | null;
   hardwareVersion?: string | null;
+  bluetoothName?: string | null;
+  lockStatus?: string | null;
+  shackleStatus?: string | null;
+  lastAddress?: string | null;
+  notes?: string | null;
   lastConnectionAt?: string | null;
   lastSyncAt?: string | null;
   companyId?: string | null;
@@ -57,7 +66,13 @@ export interface Dispositivo {
 
 export interface FiltrosDispositivos {
   type?: DeviceType | "";
-  status?: DeviceStatus | "";
+  deviceType?: string;
+  productModel?: string;
+  deviceId?: string;
+  deviceName?: string;
+  companyId?: string;
+  status?: string;
+  onlineStatus?: string;
   connectionStatus?: DeviceConnectionStatus | "";
   search?: string;
 }

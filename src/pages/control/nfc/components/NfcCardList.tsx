@@ -1,6 +1,6 @@
 import type { NfcCardItem } from "../../types/control.types";
 
-export function NfcCardList({ cards }: { cards: NfcCardItem[] }) {
+export function NfcCardList({ cards, onDelete }: { cards: NfcCardItem[]; onDelete?: (id: string) => void }) {
   if (!cards.length) {
     return <div className="rounded border border-slate-200 bg-white p-8 text-center text-sm text-slate-500">No NFC cards for this block.</div>;
   }
@@ -14,6 +14,7 @@ export function NfcCardList({ cards }: { cards: NfcCardItem[] }) {
             <th className="px-4 py-3">Block</th>
             <th className="px-4 py-3">Status</th>
             <th className="px-4 py-3">Synced at</th>
+            <th className="px-4 py-3">Operate</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
@@ -23,6 +24,11 @@ export function NfcCardList({ cards }: { cards: NfcCardItem[] }) {
               <td className="px-4 py-3 text-slate-600">{card.blockNumber ?? "Block 1"}</td>
               <td className="px-4 py-3 text-slate-600">{card.status}</td>
               <td className="px-4 py-3 text-slate-500">{card.syncedAt ?? "-"}</td>
+              <td className="px-4 py-3">
+                <button type="button" onClick={() => onDelete?.(card.id)} className="text-sm font-medium text-red-600 hover:text-red-700">
+                  Delete
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -1,17 +1,20 @@
 import type { DeviceParameterCategory } from "../../types/control.types";
 
 export const parameterCategories: DeviceParameterCategory[] = [
-  { key: "communication", label: "Communication" },
-  { key: "time", label: "Time" },
-  { key: "shackle", label: "Shackle" },
-  { key: "instructionSet", label: "Instruction Set" },
-  { key: "bluetooth", label: "Bluetooth" },
-  { key: "location", label: "Location" },
-  { key: "powerSupply", label: "Power Supply" },
+  { key: "ble", label: "BLE" },
+  { key: "power", label: "Power" },
+  { key: "nfc", label: "NFC" },
   { key: "sensor", label: "Sensor" },
-  { key: "icCard", label: "IC Card" },
+  { key: "shackle", label: "Shackle" },
   { key: "storage", label: "Storage" },
   { key: "ota", label: "OTA" },
+  { key: "cmdSet", label: "CMD Set" },
+  { key: "protocol", label: "Protocol" },
+  { key: "password", label: "Password" },
+  { key: "fixedPassword", label: "Fixed password" },
+  { key: "time", label: "Time" },
+  { key: "location", label: "Location" },
+  { key: "communication", label: "Communication" },
 ];
 
 export function ParameterCategoryTabs({ active, onChange }: { active: string; onChange: (key: string) => void }) {

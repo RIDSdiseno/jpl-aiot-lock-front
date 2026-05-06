@@ -1,6 +1,7 @@
 import { ShieldCheck } from "lucide-react";
 import { FormularioLogin } from "../../../componentes/login/FormularioLogin";
 import { TechIconCarousel } from "../../../componentes/login/TechIconCarousel";
+import { useLoginLanguage } from "../../../i18n/useLoginLanguage";
 
 const PARTICULAS = Array.from({ length: 24 }, (_, i) => ({
   id: i,
@@ -12,6 +13,8 @@ const PARTICULAS = Array.from({ length: 24 }, (_, i) => ({
 }));
 
 export function PaginaLogin() {
+  const { language, setLanguage, t } = useLoginLanguage();
+
   return (
     <main
       className="relative flex min-h-screen flex-col overflow-hidden"
@@ -89,21 +92,21 @@ export function PaginaLogin() {
             className="font-mono text-sm font-semibold tracking-[0.18em] text-cyan-400"
             style={{ textShadow: "0 0 14px rgba(34,211,238,0.50)" }}
           >
-            JPL AIoT Lock
+            {t.brandLeft}
           </span>
         </div>
 
         {/* Center: platform label */}
         <div className="hidden sm:block">
           <span className="font-mono text-xs tracking-[0.35em] uppercase text-slate-500">
-            IoT Platform System
+            {t.brandCenter}
           </span>
         </div>
 
         {/* Right: status */}
         <div className="flex items-center gap-3">
           <span className="hidden font-mono text-xs tracking-[0.2em] text-slate-500 md:inline">
-            Smart Access
+            {t.brandRight}
           </span>
           <div className="h-4 w-px bg-cyan-900/50" />
           <div className="flex items-center gap-1.5">
@@ -111,7 +114,7 @@ export function PaginaLogin() {
               className="h-1.5 w-1.5 animate-pulse rounded-full bg-green-400"
               style={{ boxShadow: "0 0 6px rgba(74,222,128,0.8)" }}
             />
-            <span className="font-mono text-xs text-green-400">ONLINE</span>
+            <span className="font-mono text-xs text-green-400">{t.status.online}</span>
           </div>
         </div>
       </header>
@@ -120,7 +123,7 @@ export function PaginaLogin() {
       <div className="relative z-10 flex flex-1 flex-col lg:flex-row">
         {/* Left: carousel (lg+) */}
         <div className="hidden lg:flex lg:flex-1 items-center justify-center px-8 py-12">
-          <TechIconCarousel />
+          <TechIconCarousel t={t} />
         </div>
 
         {/* Vertical divider */}
@@ -184,14 +187,14 @@ export function PaginaLogin() {
                   HHDlink
                 </h1>
                 <p className="mt-0.5 font-mono text-xs tracking-[0.22em] uppercase text-slate-500">
-                  JPL AIoT Lock Platform
+                  {t.platformSubtitle}
                 </p>
                 <div className="mt-4 h-px bg-gradient-to-r from-transparent via-cyan-500/32 to-transparent" />
               </div>
 
-              {/* Form — unchanged logic */}
+              {/* Form */}
               <div className="relative">
-                <FormularioLogin />
+                <FormularioLogin t={t} language={language} setLanguage={setLanguage} />
               </div>
             </div>
 
@@ -199,9 +202,9 @@ export function PaginaLogin() {
             <div className="mt-4 flex items-center justify-center gap-3 font-mono text-xs text-slate-700">
               <span>v2.0.1</span>
               <div className="h-3 w-px bg-slate-800" />
-              <span>AIoT Lock System</span>
+              <span>{t.footer.system}</span>
               <div className="h-3 w-px bg-slate-800" />
-              <span className="text-green-800">● Secure</span>
+              <span className="text-green-800">{t.footer.secure}</span>
             </div>
           </div>
         </div>

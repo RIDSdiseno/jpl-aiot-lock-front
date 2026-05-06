@@ -54,9 +54,13 @@ export interface DeviceCommandRecord {
   id: string;
   sortNo?: number;
   deviceId: string;
+  deviceName?: string;
   commandContent?: string;
   commandType: string;
   status: DeviceCommandStatus;
+  progress?: number;
+  payloadSummary?: string;
+  updatedAt?: string;
   executionTime?: string;
   responseContent?: string;
   submittedReservedCommand?: boolean;

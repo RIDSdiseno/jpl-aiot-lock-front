@@ -42,7 +42,7 @@ export function DynamicPasswordPanel({
         </div>
         <PasswordSecurityNotice warning={data?.warning ?? "Do not reveal the password to non-elock operators."} />
         <Boton type="button" variante="secundario" icono={<RefreshCw className="h-4 w-4" />} onClick={onRefresh} disabled={loading}>
-          Refresh
+          Update
         </Boton>
       </div>
     </div>

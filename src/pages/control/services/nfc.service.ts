@@ -16,8 +16,8 @@ export async function addNfcCard(deviceId: string, cardNumber: string, blockNumb
   return extraerDatos<NfcCardItem>(response);
 }
 
-export async function syncNfcCards(deviceId: string) {
-  const response = await api.post<ApiEnvelope<{ syncedAt: string; cards: NfcCardItem[] }>>(`/control/devices/${deviceId}/nfc/sync`);
+export async function syncNfcCards(deviceId: string, cards?: Array<Pick<NfcCardItem, "cardNumber" | "blockNumber">>) {
+  const response = await api.post<ApiEnvelope<{ syncedAt: string; cards: NfcCardItem[] }>>(`/control/devices/${deviceId}/nfc/sync`, { cards });
   return extraerDatos<{ syncedAt: string; cards: NfcCardItem[] }>(response);
 }
 

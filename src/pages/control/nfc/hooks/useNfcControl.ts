@@ -17,7 +17,7 @@ export function useNfcControl(deviceId?: string) {
     cardsQuery,
     read: useMutation({ mutationFn: () => readNfcCards(deviceId ?? ""), onSuccess: invalidate }),
     add: useMutation({ mutationFn: (cardNumber: string) => addNfcCard(deviceId ?? "", cardNumber, "Block 1"), onSuccess: invalidate }),
-    sync: useMutation({ mutationFn: () => syncNfcCards(deviceId ?? ""), onSuccess: invalidate }),
+    sync: useMutation({ mutationFn: (cards?: Parameters<typeof syncNfcCards>[1]) => syncNfcCards(deviceId ?? "", cards), onSuccess: invalidate }),
     clear: useMutation({ mutationFn: () => clearNfcCards(deviceId ?? ""), onSuccess: invalidate }),
     reserve: useMutation({ mutationFn: () => reserveNfcCommand(deviceId ?? "") }),
   };

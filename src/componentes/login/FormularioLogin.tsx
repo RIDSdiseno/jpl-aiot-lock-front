@@ -8,18 +8,23 @@ import {
   loginSchema,
   type LoginFormulario,
 } from "../../modulos/autenticacion/esquemas/autenticacion.schemas";
+import type { LoginLanguage, LoginTranslations } from "../../i18n/loginTranslations";
 import { CajaCaptcha } from "./CajaCaptcha";
 import { SelectorIdioma } from "./SelectorIdioma";
 
-// ─── Estilos compartidos de input ────────────────────────────────────────────
 const inputBase =
   "w-full rounded-lg border border-slate-700/55 bg-slate-900/60 py-2.5 pl-10 pr-4 " +
   "font-mono text-sm text-slate-200 outline-none transition-all " +
   "placeholder:text-slate-600 " +
   "focus:border-cyan-500/60 focus:bg-slate-900/80 focus:ring-1 focus:ring-cyan-500/25";
 
-export function FormularioLogin() {
-  // ── Auth logic — sin cambios ─────────────────────────────────────────────
+interface FormularioLoginProps {
+  t: LoginTranslations;
+  language: LoginLanguage;
+  setLanguage: (lang: LoginLanguage) => void;
+}
+
+export function FormularioLogin({ t, language, setLanguage }: FormularioLoginProps) {
   const navigate = useNavigate();
   const { loginMutation } = useAutenticacion();
   const [codigoCaptcha, setCodigoCaptcha] = useState("");
@@ -37,7 +42,7 @@ export function FormularioLogin() {
 
   const enviar = form.handleSubmit(async (valores) => {
     if (valores.captcha !== codigoCaptcha) {
-      setErrorCaptcha("El captcha no coincide");
+      setErrorCaptcha(t.errors.invalidCaptcha);
       return;
     }
     setErrorCaptcha("");
@@ -47,27 +52,27 @@ export function FormularioLogin() {
     });
     navigate("/app/inicio", { replace: true });
   });
-  // ─────────────────────────────────────────────────────────────────────────
 
   return (
     <form onSubmit={enviar} className="space-y-5">
       {/* Usuario */}
       <label className="block">
         <span className="mb-2 block font-mono text-xs tracking-[0.2em] uppercase text-slate-400">
-          Usuario
+          {t.usernameLabel}
         </span>
         <div className="relative">
           <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-cyan-500/55" />
           <input
-            placeholder="Ingrese su nombre de usuario"
+            aria-label={t.usernameLabel}
+            placeholder={t.usernamePlaceholder}
             autoComplete="username"
             {...form.register("email")}
             className={inputBase}
           />
         </div>
-        {form.formState.errors.email?.message && (
+        {form.formState.errors.email && (
           <span className="mt-1 block font-mono text-xs text-red-400">
-            {form.formState.errors.email.message}
+            {t.errors.requiredUser}
           </span>
         )}
       </label>
@@ -75,21 +80,22 @@ export function FormularioLogin() {
       {/* Contraseña */}
       <label className="block">
         <span className="mb-2 block font-mono text-xs tracking-[0.2em] uppercase text-slate-400">
-          Contraseña
+          {t.passwordLabel}
         </span>
         <div className="relative">
           <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-cyan-500/55" />
           <input
             type="password"
-            placeholder="Ingrese su contraseña"
+            aria-label={t.passwordLabel}
+            placeholder={t.passwordPlaceholder}
             autoComplete="current-password"
             {...form.register("password")}
             className={inputBase}
           />
         </div>
-        {form.formState.errors.password?.message && (
+        {form.formState.errors.password && (
           <span className="mt-1 block font-mono text-xs text-red-400">
-            {form.formState.errors.password.message}
+            {t.errors.requiredPassword}
           </span>
         )}
       </label>
@@ -99,7 +105,8 @@ export function FormularioLogin() {
         <CajaCaptcha onCodigo={registrarCodigo} />
         <label className="block">
           <input
-            placeholder="Captcha"
+            aria-label={t.captchaLabel}
+            placeholder={t.captchaPlaceholder}
             {...form.register("captcha")}
             className={
               "w-full rounded-lg border border-slate-700/55 bg-slate-900/60 px-3 py-2.5 " +
@@ -108,16 +115,20 @@ export function FormularioLogin() {
               "focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/25"
             }
           />
-          {(form.formState.errors.captcha?.message ?? errorCaptcha) && (
+          {(form.formState.errors.captcha || errorCaptcha) && (
             <span className="mt-1 block font-mono text-xs text-red-400">
-              {form.formState.errors.captcha?.message ?? errorCaptcha}
+              {errorCaptcha || t.errors.requiredCaptcha}
             </span>
           )}
         </label>
       </div>
 
       {/* Selector de idioma */}
-      <SelectorIdioma />
+      <SelectorIdioma
+        language={language}
+        setLanguage={setLanguage}
+        label={t.languageLabel}
+      />
 
       {/* Error de autenticación */}
       {loginMutation.isError && (
@@ -128,7 +139,7 @@ export function FormularioLogin() {
             border: "1px solid rgba(239,68,68,0.25)",
           }}
         >
-          ⚠ Credenciales incorrectas o usuario inactivo.
+          ⚠ {t.errors.invalidCredentials}
         </div>
       )}
 
@@ -136,6 +147,7 @@ export function FormularioLogin() {
       <button
         type="submit"
         disabled={loginMutation.isPending}
+        aria-label={loginMutation.isPending ? t.loginLoading : t.loginButton}
         className="group relative w-full overflow-hidden rounded-lg py-3 font-mono text-sm font-semibold uppercase tracking-widest text-white transition-all disabled:cursor-not-allowed disabled:opacity-55"
         style={{
           background: loginMutation.isPending
@@ -146,7 +158,6 @@ export function FormularioLogin() {
             : "0 0 22px rgba(8,145,178,0.38)",
         }}
       >
-        {/* Shimmer on hover */}
         {!loginMutation.isPending && (
           <div className="absolute inset-0 translate-x-[-100%] bg-gradient-to-r from-transparent via-white/10 to-transparent transition-transform duration-500 group-hover:translate-x-[100%]" />
         )}
@@ -154,12 +165,12 @@ export function FormularioLogin() {
           {loginMutation.isPending ? (
             <>
               <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white" />
-              Iniciando sesión...
+              {t.loginLoading}
             </>
           ) : (
             <>
               <LogIn className="h-4 w-4" />
-              Ingresar
+              {t.loginButton}
             </>
           )}
         </span>
@@ -168,7 +179,7 @@ export function FormularioLogin() {
       {/* Indicador de sesión segura */}
       <div className="flex items-center justify-center gap-2 font-mono text-xs text-slate-600">
         <Lock className="h-3 w-3" />
-        Acceso seguro mediante token Bearer
+        {t.secureAccess}
       </div>
     </form>
   );

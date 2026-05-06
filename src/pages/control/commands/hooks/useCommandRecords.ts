@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { cancelCommandRecord, getCommandRecords, type CommandRecordFilters } from "../../services/command-record.service";
+import { cancelCommandRecord, deleteCommandRecord, getCommandRecords, resendCommandRecord, type CommandRecordFilters } from "../../services/command-record.service";
 
 export function useCommandRecords(filters: CommandRecordFilters) {
   const queryClient = useQueryClient();
@@ -9,6 +9,14 @@ export function useCommandRecords(filters: CommandRecordFilters) {
     mutationFn: cancelCommandRecord,
     onSuccess: async () => queryClient.invalidateQueries({ queryKey: ["control-command-records"] }),
   });
+  const resend = useMutation({
+    mutationFn: resendCommandRecord,
+    onSuccess: async () => queryClient.invalidateQueries({ queryKey: ["control-command-records"] }),
+  });
+  const remove = useMutation({
+    mutationFn: deleteCommandRecord,
+    onSuccess: async () => queryClient.invalidateQueries({ queryKey: ["control-command-records"] }),
+  });
 
-  return { recordsQuery, cancel };
+  return { recordsQuery, cancel, resend, remove };
 }

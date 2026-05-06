@@ -10,7 +10,8 @@ function PasswordContent({ selectedDevice }: { selectedDevice?: ControlDevice })
   return (
     <>
       <ControlSelectedDeviceBanner device={selectedDevice} />
-      <DynamicPasswordPanel data={passwordQuery.data} onRefresh={() => void passwordQuery.refetch()} loading={passwordQuery.isFetching} />
+      {selectedDevice && !selectedDevice.isOnline ? <div className="rounded border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">El dispositivo está offline. La contraseña mostrada puede ser la última disponible.</div> : null}
+      <DynamicPasswordPanel data={passwordQuery.data} onRefresh={() => passwordQuery.update.mutate()} loading={passwordQuery.isFetching || passwordQuery.update.isPending} />
     </>
   );
 }

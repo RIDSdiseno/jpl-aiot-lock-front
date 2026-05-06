@@ -11,14 +11,20 @@ import { useDeviceParameters } from "./hooks/useDeviceParameters";
 
 function ParameterContent({ selectedDevice }: { selectedDevice?: ControlDevice }) {
   const navigate = useNavigate();
-  const [category, setCategory] = useState("communication");
+  const [category, setCategory] = useState("ble");
   const [fields, setFields] = useState<DeviceParameterField[]>([]);
   const [message, setMessage] = useState("");
+  const [hasRead, setHasRead] = useState(false);
   const parameters = useDeviceParameters(selectedDevice?.deviceId);
 
   useEffect(() => {
     setFields((parameters.parametersQuery.data?.fields ?? []).filter((field) => field.category === category));
   }, [category, parameters.parametersQuery.data]);
+
+  useEffect(() => {
+    setHasRead(false);
+    setMessage("");
+  }, [selectedDevice?.deviceId]);
 
   return (
     <>
@@ -34,8 +40,18 @@ function ParameterContent({ selectedDevice }: { selectedDevice?: ControlDevice }
             onBatchReserve={() => parameters.reserve.mutate(undefined, { onSuccess: () => setMessage("Batch reserve command created.") })}
             onReservationRecord={() => navigate(`/app/control/cmd-record?deviceId=${selectedDevice?.deviceId ?? ""}`)}
             onReservation={() => parameters.reserve.mutate(undefined, { onSuccess: () => setMessage("Reservation CMD created.") })}
-            onRead={() => parameters.read.mutate(undefined, { onSuccess: () => setMessage("Parameters read from mock service.") })}
-            onUpdate={() => parameters.update.mutate(fields, { onSuccess: () => setMessage("Parameters updated in mock service.") })}
+            onRead={() =>
+              parameters.read.mutate(undefined, {
+                onSuccess: () => {
+                  setHasRead(true);
+                  setMessage("Parameters read from mock service.");
+                },
+              })
+            }
+            onUpdate={() => {
+              if (!hasRead && !window.confirm("Se recomienda leer los parámetros actuales antes de actualizar.")) return;
+              parameters.update.mutate(fields, { onSuccess: () => setMessage("Parameters updated in mock service.") });
+            }}
           />
         </div>
       </div>

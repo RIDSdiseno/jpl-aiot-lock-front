@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import type { ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import { MigasPan } from "../../componentes/layout/MigasPan";
+import { useI18n } from "../../i18n/i18nStore";
 import { getControlDevices } from "./services/control.service";
 import { ControlDeviceSidebar } from "./components/ControlDeviceSidebar";
 import type { ControlDevice, ControlStatusFilter } from "./types/control.types";
@@ -14,6 +15,7 @@ export function ControlLayout({
   children: (props: { selectedDevice?: ControlDevice }) => ReactNode;
 }) {
   const [status, setStatus] = useState<ControlStatusFilter>("all");
+  const { t } = useI18n();
   const [type, setType] = useState("AllType");
   const [search, setSearch] = useState("");
   const [selectedDevice, setSelectedDevice] = useState<ControlDevice | undefined>();
@@ -36,7 +38,7 @@ export function ControlLayout({
     <div className="space-y-4">
       <div>
         <MigasPan items={["Home", "Control", section]} />
-        <h1 className="mt-2 text-2xl font-semibold text-slate-950">Control</h1>
+        <h1 className="mt-2 text-2xl font-semibold text-slate-950">{t.control.title}</h1>
       </div>
       <div className="flex flex-col gap-4 lg:flex-row">
         <ControlDeviceSidebar
