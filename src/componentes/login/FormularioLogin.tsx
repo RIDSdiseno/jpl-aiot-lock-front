@@ -13,10 +13,12 @@ import { CajaCaptcha } from "./CajaCaptcha";
 import { SelectorIdioma } from "./SelectorIdioma";
 
 const inputBase =
-  "w-full rounded-lg border border-slate-700/55 bg-slate-900/60 py-2.5 pl-10 pr-4 " +
-  "font-mono text-sm text-slate-200 outline-none transition-all " +
+  "w-full rounded-lg border border-slate-700/50 bg-slate-900/55 py-2.5 pl-10 pr-4 " +
+  "font-mono text-sm text-slate-200 outline-none transition-all duration-200 " +
   "placeholder:text-slate-600 " +
-  "focus:border-cyan-500/60 focus:bg-slate-900/80 focus:ring-1 focus:ring-cyan-500/25";
+  "hover:border-cyan-700/55 hover:bg-slate-900/65 " +
+  "focus:border-cyan-500/72 focus:bg-slate-900/82 focus:ring-2 focus:ring-cyan-500/20 " +
+  "focus:shadow-[0_0_16px_rgba(6,182,212,0.14)]";
 
 interface FormularioLoginProps {
   t: LoginTranslations;
@@ -109,10 +111,12 @@ export function FormularioLogin({ t, language, setLanguage }: FormularioLoginPro
             placeholder={t.captchaPlaceholder}
             {...form.register("captcha")}
             className={
-              "w-full rounded-lg border border-slate-700/55 bg-slate-900/60 px-3 py-2.5 " +
-              "font-mono text-sm text-slate-200 outline-none transition-all " +
+              "w-full rounded-lg border border-slate-700/50 bg-slate-900/55 px-3 py-2.5 " +
+              "font-mono text-sm text-slate-200 outline-none transition-all duration-200 " +
               "placeholder:text-slate-600 " +
-              "focus:border-cyan-500/60 focus:ring-1 focus:ring-cyan-500/25"
+              "hover:border-cyan-700/55 hover:bg-slate-900/65 " +
+              "focus:border-cyan-500/72 focus:ring-2 focus:ring-cyan-500/20 " +
+              "focus:shadow-[0_0_16px_rgba(6,182,212,0.14)]"
             }
           />
           {(form.formState.errors.captcha || errorCaptcha) && (
@@ -148,14 +152,14 @@ export function FormularioLogin({ t, language, setLanguage }: FormularioLoginPro
         type="submit"
         disabled={loginMutation.isPending}
         aria-label={loginMutation.isPending ? t.loginLoading : t.loginButton}
-        className="group relative w-full overflow-hidden rounded-lg py-3 font-mono text-sm font-semibold uppercase tracking-widest text-white transition-all disabled:cursor-not-allowed disabled:opacity-55"
+        className="group relative w-full overflow-hidden rounded-lg py-3 font-mono text-sm font-semibold uppercase tracking-widest text-white transition-all duration-200 hover:scale-[1.015] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-55 disabled:hover:scale-100"
         style={{
           background: loginMutation.isPending
             ? "linear-gradient(135deg, #164e63, #1e3a5f)"
-            : "linear-gradient(135deg, #0891b2 0%, #2563eb 100%)",
+            : "linear-gradient(135deg, #0891b2 0%, #2563eb 55%, #7c3aed 100%)",
           boxShadow: loginMutation.isPending
             ? "none"
-            : "0 0 22px rgba(8,145,178,0.38)",
+            : "0 0 28px rgba(8,145,178,0.45), 0 0 60px rgba(8,145,178,0.12)",
         }}
       >
         {!loginMutation.isPending && (

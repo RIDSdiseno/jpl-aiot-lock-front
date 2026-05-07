@@ -42,6 +42,15 @@ export interface LoginSection {
     invalidCaptcha: string;
     invalidCredentials: string;
   };
+  featureCards: {
+    sectionLabel: string;
+    locks:    { title: string; desc: string };
+    remote:   { title: string; desc: string };
+    events:   { title: string; desc: string };
+    audit:    { title: string; desc: string };
+    tracking: { title: string; desc: string };
+    nfc:      { title: string; desc: string };
+  };
   footer: {
     system: string;
     secure: string;
@@ -318,6 +327,15 @@ export const appTranslations: Record<AppLanguage, AppTranslations> = {
         invalidCaptcha: "El captcha no coincide.",
         invalidCredentials: "Credenciales incorrectas o usuario inactivo.",
       },
+      featureCards: {
+        sectionLabel: "Capacidades del sistema",
+        locks:    { title: "Candados IoT",       desc: "Gestión de dispositivos"  },
+        remote:   { title: "Control remoto",     desc: "Comandos en tiempo real"  },
+        events:   { title: "Eventos",            desc: "Monitoreo en tiempo real" },
+        audit:    { title: "Auditoría",          desc: "Seguridad y trazabilidad" },
+        tracking: { title: "Tracking GPS",       desc: "Rastreo y geocercas"      },
+        nfc:      { title: "NFC / Contraseñas",  desc: "Accesos dinámicos"        },
+      },
       footer: { system: "AIoT Lock System", secure: "● Seguro" },
       status: { online: "EN LÍNEA" },
     },
@@ -545,6 +563,15 @@ export const appTranslations: Record<AppLanguage, AppTranslations> = {
         invalidCaptcha: "The captcha code does not match.",
         invalidCredentials: "Invalid credentials or inactive user.",
       },
+      featureCards: {
+        sectionLabel: "System capabilities",
+        locks:    { title: "IoT Locks",         desc: "Device management"        },
+        remote:   { title: "Remote Control",    desc: "Real-time commands"       },
+        events:   { title: "Events",            desc: "Real-time monitoring"     },
+        audit:    { title: "Audit",             desc: "Security & traceability"  },
+        tracking: { title: "GPS Tracking",      desc: "Tracking & geofences"     },
+        nfc:      { title: "NFC / Passwords",   desc: "Dynamic access"           },
+      },
       footer: { system: "AIoT Lock System", secure: "● Secure" },
       status: { online: "ONLINE" },
     },
@@ -770,6 +797,15 @@ export const appTranslations: Record<AppLanguage, AppTranslations> = {
         requiredCaptcha: "请输入验证码。",
         invalidCaptcha: "验证码不匹配。",
         invalidCredentials: "凭据不正确或用户未激活。",
+      },
+      featureCards: {
+        sectionLabel: "系统功能",
+        locks:    { title: "IoT 智能锁",   desc: "设备管理"       },
+        remote:   { title: "远程控制",     desc: "实时命令"       },
+        events:   { title: "事件",         desc: "实时监控"       },
+        audit:    { title: "审计",         desc: "安全与追溯"     },
+        tracking: { title: "GPS 追踪",     desc: "追踪与电子围栏" },
+        nfc:      { title: "NFC / 密码",   desc: "动态访问"       },
       },
       footer: { system: "AIoT Lock 系统", secure: "● 安全" },
       status: { online: "在线" },
