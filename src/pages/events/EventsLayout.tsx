@@ -1,19 +1,20 @@
 import type { ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 import { MigasPan } from "../../componentes/layout/MigasPan";
-
-const tabs = [
-  { label: "Todos los eventos", to: "/app/event/all-events" },
-  { label: "Eventos de alarma", to: "/app/event/alarm-event" },
-  { label: "Eventos push", to: "/app/event/push-event" },
-];
+import { useAppText } from "../../i18n/text";
 
 export function EventsLayout({ section, children }: { section: string; children: ReactNode }) {
+  const tr = useAppText();
+  const tabs = [
+    { label: tr("All Events"), to: "/app/event/all-events" },
+    { label: tr("Alarm Event"), to: "/app/event/alarm-event" },
+    { label: tr("Push Event"), to: "/app/event/push-event" },
+  ];
   return (
     <div>
       <div className="mb-4">
-        <MigasPan items={["Inicio", "Eventos", section]} />
-        <h1 className="mt-2 text-2xl font-semibold text-slate-900">Eventos</h1>
+        <MigasPan items={[tr("Home Page"), tr("Event"), section]} />
+        <h1 className="mt-2 text-2xl font-semibold text-slate-900">{tr("Event")}</h1>
       </div>
       <div className="mb-5 flex flex-wrap gap-2 border-b border-slate-200">
         {tabs.map((tab) => (

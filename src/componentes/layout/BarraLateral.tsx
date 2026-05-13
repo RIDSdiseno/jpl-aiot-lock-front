@@ -19,6 +19,7 @@ import {
 import { useEffect, useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useI18n } from "../../i18n/i18nStore";
+import { useAppText } from "../../i18n/text";
 
 const ACTIVE =
   "flex items-center gap-3 rounded-md border-l-2 border-cyan-400 bg-gradient-to-r from-cyan-500/12 to-transparent px-3 py-2.5 text-sm font-medium text-cyan-300 transition-all";
@@ -57,23 +58,27 @@ function Separator() {
 export function BarraLateral() {
   const location = useLocation();
   const { t } = useI18n();
+  const tr = useAppText();
   const nav = t.nav;
 
   const estaEnControl   = location.pathname.startsWith("/app/control");
   const estaEnEventos   = location.pathname.startsWith("/app/event") || location.pathname.startsWith("/app/eventos");
   const estaEnGis       = location.pathname.startsWith("/app/gis");
+  const estaEnReportes  = location.pathname.startsWith("/app/reports") || location.pathname.startsWith("/app/reportes");
   const estaEnMaintain  = location.pathname.startsWith("/app/maintain") || location.pathname.startsWith("/app/mantenimiento");
   const estaEnUserCenter= location.pathname.startsWith("/app/user-center");
 
   const [controlAbierto,    setControlAbierto]    = useState(estaEnControl);
   const [eventosAbierto,    setEventosAbierto]    = useState(estaEnEventos);
   const [gisAbierto,        setGisAbierto]        = useState(estaEnGis);
+  const [reportesAbierto,   setReportesAbierto]   = useState(estaEnReportes);
   const [maintainAbierto,   setMaintainAbierto]   = useState(estaEnMaintain);
   const [userCenterAbierto, setUserCenterAbierto] = useState(estaEnUserCenter);
 
   useEffect(() => { if (estaEnControl)    setControlAbierto(true);    }, [estaEnControl]);
   useEffect(() => { if (estaEnEventos)    setEventosAbierto(true);    }, [estaEnEventos]);
   useEffect(() => { if (estaEnGis)        setGisAbierto(true);        }, [estaEnGis]);
+  useEffect(() => { if (estaEnReportes)   setReportesAbierto(true);   }, [estaEnReportes]);
   useEffect(() => { if (estaEnMaintain)   setMaintainAbierto(true);   }, [estaEnMaintain]);
   useEffect(() => { if (estaEnUserCenter) setUserCenterAbierto(true); }, [estaEnUserCenter]);
 
@@ -84,9 +89,8 @@ export function BarraLateral() {
 
   const gestionItems = [
     { label: nav.alerts,     to: "/app/alertas",      icon: AlertTriangle },
-    { label: nav.reports,    to: "/app/reportes",     icon: BarChart3     },
     { label: nav.audit,      to: "/app/audit",        icon: ClipboardList },
-    { label: nav.devices,    to: "/app/dispositivos", icon: Cpu           },
+    { label: nav.devices,    to: "/app/device",       icon: Cpu           },
     { label: nav.smartLocks, to: "/app/candados",     icon: LockKeyhole   },
     { label: nav.history,    to: "/app/history",      icon: History       },
   ];
@@ -106,8 +110,16 @@ export function BarraLateral() {
   ];
 
   const gisSubItems = [
-    { label: t.gis?.breadcrumbGeoFence  ?? "Geo-Fence",    to: "/app/gis/geofences"   },
-    { label: t.gis?.breadcrumbFenceRecord ?? "Fence Record", to: "/app/gis/fence-record" },
+    { label: t.gis?.breadcrumbGeoFence  ?? tr("Fence Seal&Unseal"),    to: "/app/gis/geofences"   },
+    { label: t.gis?.breadcrumbFenceRecord ?? tr("Fence Record"), to: "/app/gis/fence-record" },
+  ];
+
+  const reportSubItems = [
+    { label: tr("APP Seal&Unseal report"), to: "/app/reports/app-seal-unseal" },
+    { label: tr("Lock&Unlock"), to: "/app/reports/lock-unlock" },
+    { label: tr("Fence Seal&Unseal"), to: "/app/reports/fence-seal-unseal" },
+    { label: tr("Fence Record"), to: "/app/reports/fence-record" },
+    { label: tr("User Log"), to: "/app/reports/user-log" },
   ];
 
   const maintainSubItems = [
@@ -119,7 +131,7 @@ export function BarraLateral() {
   const userCenterSubItems = [
     { label: t.userCenter?.organization ?? "Organization", to: "/app/user-center/organization" },
     { label: t.userCenter?.permission   ?? "Permission",   to: "/app/user-center/permission"   },
-    { label: t.userCenter?.user         ?? "User",         to: "/app/user-center/users"        },
+    { label: t.userCenter?.user         ?? "User",         to: "/app/user-center/user"         },
   ];
 
   return (
@@ -210,7 +222,7 @@ export function BarraLateral() {
       <nav className="relative z-10 flex-1 overflow-y-auto px-3 py-3">
 
         {/* PRINCIPAL */}
-        <SectionLabel label="Principal" />
+        <SectionLabel label={tr("Principal")} />
         {mainItems.map((item) => (
           <NavLink
             key={item.to}
@@ -225,7 +237,7 @@ export function BarraLateral() {
         <Separator />
 
         {/* OPERACIONES */}
-        <SectionLabel label="Operaciones" />
+        <SectionLabel label={tr("Operaciones")} />
 
         {/* Control */}
         <div>
@@ -305,7 +317,7 @@ export function BarraLateral() {
         <Separator />
 
         {/* GESTIÓN */}
-        <SectionLabel label="Gestión" />
+        <SectionLabel label={tr("Gestión")} />
         {gestionItems.map((item) => (
           <NavLink
             key={item.to}
@@ -316,6 +328,31 @@ export function BarraLateral() {
             {item.label}
           </NavLink>
         ))}
+
+        {/* Report */}
+        <div>
+          <button
+            type="button"
+            onClick={() => setReportesAbierto((v) => !v)}
+            className={estaEnReportes ? BTN_ACTIVE : BTN_INACTIVE}
+            aria-expanded={reportesAbierto}
+          >
+            <BarChart3 className="h-4 w-4 shrink-0" />
+            {nav.reports}
+            {reportesAbierto
+              ? <ChevronDown className="ml-auto h-3.5 w-3.5 opacity-60" />
+              : <ChevronRight className="ml-auto h-3.5 w-3.5 opacity-40" />}
+          </button>
+          {reportesAbierto && (
+            <div className="ml-6 mt-1 space-y-0.5 border-l border-cyan-500/18 pl-2">
+              {reportSubItems.map((item) => (
+                <NavLink key={item.to} to={item.to} className={({ isActive }) => isActive ? SUB_ACTIVE : SUB_INACTIVE}>
+                  {item.label}
+                </NavLink>
+              ))}
+            </div>
+          )}
+        </div>
 
         {/* Mantenimiento */}
         <div>
@@ -345,7 +382,7 @@ export function BarraLateral() {
         <Separator />
 
         {/* ADMINISTRACIÓN */}
-        <SectionLabel label="Administración" />
+        <SectionLabel label={tr("Administración")} />
         <div>
           <button
             type="button"
@@ -383,7 +420,7 @@ export function BarraLateral() {
             style={{ boxShadow: "0 0 5px rgba(74,222,128,0.8)" }}
           />
           <span className="font-mono text-[10px] tracking-wider text-slate-600">
-            SISTEMA ACTIVO
+            {tr("SISTEMA ACTIVO")}
           </span>
           <span className="ml-auto font-mono text-[10px] text-slate-700">v2.0.1</span>
         </div>

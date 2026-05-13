@@ -3,7 +3,7 @@ import { LayoutPrincipal } from "../componentes/layout/LayoutPrincipal";
 import { almacenamiento } from "../librerias/almacenamiento";
 import { PaginaLogin } from "../modulos/autenticacion/paginas/PaginaLogin";
 import { DashboardPage } from "../pages/dashboard/DashboardPage";
-import { PaginaDispositivos } from "../modulos/dispositivos/paginas/PaginaDispositivos";
+import { DevicePage } from "../pages/device/DevicePage";
 import { PaginaDetalleDispositivo } from "../modulos/dispositivos/paginas/PaginaDetalleDispositivo";
 import { PaginaCandadosInteligentes } from "../modulos/dispositivos/paginas/PaginaCandadosInteligentes";
 import { PaginaMapa } from "../modulos/gis/paginas/PaginaMapa";
@@ -27,9 +27,13 @@ import { PresetPage } from "../pages/control/preset/PresetPage";
 import { AlarmEventsPage } from "../pages/events/alarm-event/AlarmEventsPage";
 import { AllEventsPage } from "../pages/events/all-events/AllEventsPage";
 import { PushEventsPage } from "../pages/events/push-event/PushEventsPage";
+import { AppSealUnsealReportPage } from "../pages/reports/AppSealUnsealReportPage";
+import { FenceRecordReportPage } from "../pages/reports/FenceRecordReportPage";
+import { FenceSealUnsealReportPage } from "../pages/reports/FenceSealUnsealReportPage";
+import { LockUnlockReportPage } from "../pages/reports/LockUnlockReportPage";
+import { UserLogReportPage as ReportUserLogPage } from "../pages/reports/UserLogReportPage";
 import { PaginaAlertas } from "../modulos/alertas/paginas/PaginaAlertas";
 import { PaginaAuditoria } from "../modulos/auditoria/paginas/PaginaAuditoria";
-import { PaginaReportes } from "../modulos/reportes/paginas/PaginaReportes";
 import { PaginaMantenimiento } from "../modulos/mantenimiento/paginas/PaginaMantenimiento";
 import { PaginaHistorial } from "../modulos/historial/paginas/PaginaHistorial";
 import { PaginaUsuarios } from "../modulos/usuarios/paginas/PaginaUsuarios";
@@ -48,6 +52,7 @@ export const router = createBrowserRouter([
   { path: "/", element: <RedireccionRaiz /> },
   { path: "/dashboard", element: <Navigate to="/app/dashboard" replace /> },
   { path: "/monitoring", element: <Navigate to="/app/monitoreo" replace /> },
+  { path: "/device", element: <Navigate to="/app/device" replace /> },
   { path: "/control/nfc", element: <Navigate to="/app/control/nfc" replace /> },
   { path: "/control/password", element: <Navigate to="/app/control/password" replace /> },
   { path: "/control/cmd-record", element: <Navigate to="/app/control/cmd-record" replace /> },
@@ -56,6 +61,14 @@ export const router = createBrowserRouter([
   { path: "/event/all-events", element: <Navigate to="/app/event/all-events" replace /> },
   { path: "/event/alarm-event", element: <Navigate to="/app/event/alarm-event" replace /> },
   { path: "/event/push-event", element: <Navigate to="/app/event/push-event" replace /> },
+  { path: "/reports/app-seal-unseal", element: <Navigate to="/app/reports/app-seal-unseal" replace /> },
+  { path: "/reports/lock-unlock", element: <Navigate to="/app/reports/lock-unlock" replace /> },
+  { path: "/reports/fence-seal-unseal", element: <Navigate to="/app/reports/fence-seal-unseal" replace /> },
+  { path: "/reports/fence-record", element: <Navigate to="/app/reports/fence-record" replace /> },
+  { path: "/reports/user-log", element: <Navigate to="/app/reports/user-log" replace /> },
+  { path: "/events/all", element: <Navigate to="/app/event/all-events" replace /> },
+  { path: "/events/alarms", element: <Navigate to="/app/event/alarm-event" replace /> },
+  { path: "/events/push", element: <Navigate to="/app/event/push-event" replace /> },
   { path: "/login", element: <RutaPublica><PaginaLogin /></RutaPublica> },
   {
     path: "/app",
@@ -84,13 +97,20 @@ export const router = createBrowserRouter([
       { path: "gis/fence-seal-unseal", element: <GeoFencePage /> },
       { path: "gis/fence-record", element: <FenceRecordPage /> },
       { path: "alertas", element: <PaginaAlertas /> },
-      { path: "reportes", element: <PaginaReportes /> },
+      { path: "reportes", element: <Navigate to="/app/reports/lock-unlock" replace /> },
+      { path: "reports", element: <Navigate to="/app/reports/lock-unlock" replace /> },
+      { path: "reports/app-seal-unseal", element: <AppSealUnsealReportPage /> },
+      { path: "reports/lock-unlock", element: <LockUnlockReportPage /> },
+      { path: "reports/fence-seal-unseal", element: <FenceSealUnsealReportPage /> },
+      { path: "reports/fence-record", element: <FenceRecordReportPage /> },
+      { path: "reports/user-log", element: <ReportUserLogPage /> },
       { path: "auditoria", element: <PaginaAuditoria /> },
       { path: "audit", element: <UserLogPage /> },
       { path: "user-log", element: <UserLogPage /> },
-      { path: "dispositivos", element: <PaginaDispositivos /> },
+      { path: "dispositivos", element: <DevicePage /> },
       { path: "dispositivos/:dispositivoId", element: <PaginaDetalleDispositivo /> },
-      { path: "devices", element: <PaginaDispositivos /> },
+      { path: "device", element: <DevicePage /> },
+      { path: "devices", element: <DevicePage /> },
       { path: "devices/:dispositivoId", element: <PaginaDetalleDispositivo /> },
       { path: "devices/:dispositivoId/alarm-strategy", element: <PaginaDetalleDispositivo /> },
       { path: "candados", element: <PaginaCandadosInteligentes /> },
@@ -105,7 +125,11 @@ export const router = createBrowserRouter([
       { path: "user-center", element: <Navigate to="/app/user-center/organization" replace /> },
       { path: "user-center/organization", element: <OrganizationPage /> },
       { path: "user-center/permission", element: <PermissionPage /> },
+      { path: "user-center/user", element: <UserPage /> },
       { path: "user-center/users", element: <UserPage /> },
+      { path: "c_company", element: <Navigate to="/app/user-center/organization" replace /> },
+      { path: "c_role", element: <Navigate to="/app/user-center/permission" replace /> },
+      { path: "c_user", element: <Navigate to="/app/user-center/user" replace /> },
       { path: "usuarios", element: <PaginaUsuarios /> },
       { path: "usuarios/:usuarioId", element: <PaginaDetalleUsuario /> },
       { path: "roles-permisos", element: <PaginaRolesPermisos /> },

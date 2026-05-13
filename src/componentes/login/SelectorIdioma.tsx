@@ -17,7 +17,7 @@ export function SelectorIdioma({
     <select
       value={language}
       onChange={(e) => setLanguage(e.target.value as LoginLanguage)}
-      aria-label={label ?? "Language / Idioma / 语言"}
+      aria-label={label ?? "Language / Idioma / 中文"}
       className={`rounded-lg font-mono text-xs tracking-widest uppercase outline-none transition-all ${
         compacto ? "px-2 py-1" : "w-full px-3 py-2.5"
       }`}
@@ -27,9 +27,9 @@ export function SelectorIdioma({
         color: "#64748b",
       }}
     >
-      <option value="es">🌐 Español</option>
-      <option value="en">🌐 English</option>
-      <option value="zh">🌐 中文</option>
+      <option value="es">Espanol</option>
+      <option value="en">English</option>
+      <option value="zh">中文</option>
     </select>
   );
 }

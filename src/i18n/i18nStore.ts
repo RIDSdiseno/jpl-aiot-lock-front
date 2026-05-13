@@ -3,14 +3,12 @@ import { finalModuleTranslations } from "./finalModuleTranslations";
 import { appTranslations, type AppTranslations } from "./translations";
 import type { AppLanguage } from "./types";
 
-const STORAGE_KEY = "jpl-aiot-language";
+export const LANGUAGE_STORAGE_KEY = "jpl-aiot-lock-language";
+const LEGACY_STORAGE_KEY = "jpl-aiot-language";
 
 function detectLanguage(): AppLanguage {
-  const stored = localStorage.getItem(STORAGE_KEY);
+  const stored = localStorage.getItem(LANGUAGE_STORAGE_KEY) ?? localStorage.getItem(LEGACY_STORAGE_KEY);
   if (stored === "es" || stored === "en" || stored === "zh") return stored;
-  const nav = navigator.language ?? "";
-  if (nav.startsWith("zh")) return "zh";
-  if (nav.startsWith("es")) return "es";
   return "es";
 }
 
@@ -34,7 +32,7 @@ export const useI18n = create<I18nState>((set) => {
     language: initial,
     t: translationsFor(initial),
     setLanguage: (lang) => {
-      localStorage.setItem(STORAGE_KEY, lang);
+      localStorage.setItem(LANGUAGE_STORAGE_KEY, lang);
       set({ language: lang, t: translationsFor(lang) });
     },
   };

@@ -2,9 +2,11 @@ import { useState } from "react";
 import { EstadoCarga } from "../../../componentes/comunes/EstadoCarga";
 import { EventsLayout } from "../EventsLayout";
 import { EventPagination } from "../components/EventPagination";
+import { EventDetailDrawer } from "../components/EventDetailDrawer";
 import { EventTableToolbar } from "../components/EventTableToolbar";
+import { useEventOptions } from "../hooks/useEventOptions";
 import { exportPushEvents } from "../services/push-events.service";
-import type { EventQueryParams } from "../types/events.types";
+import type { EventQueryParams, PushEventItem } from "../types/events.types";
 import { PushEventsFilters } from "./components/PushEventsFilters";
 import { PushEventsTable } from "./components/PushEventsTable";
 import { usePushEvents } from "./hooks/usePushEvents";
@@ -14,7 +16,9 @@ const initialFilters: EventQueryParams = { page: 1, pageSize: 20 };
 export function PushEventsPage() {
   const [draftFilters, setDraftFilters] = useState<EventQueryParams>(initialFilters);
   const [filters, setFilters] = useState<EventQueryParams>(initialFilters);
+  const [selected, setSelected] = useState<PushEventItem | null>(null);
   const query = usePushEvents(filters);
+  const options = useEventOptions();
   const page = query.data?.page ?? filters.page ?? 1;
   const pageSize = query.data?.pageSize ?? filters.pageSize ?? 20;
 
@@ -28,10 +32,11 @@ export function PushEventsPage() {
           setDraftFilters(initialFilters);
           setFilters(initialFilters);
         }}
+        options={options.data}
       />
       <EventTableToolbar isLoading={query.isFetching} onRefresh={() => void query.refetch()} onExport={() => void exportPushEvents(filters)} />
       <div className="overflow-hidden rounded-md border border-slate-200">
-        {query.isLoading ? <EstadoCarga /> : <PushEventsTable items={query.data?.items ?? []} />}
+        {query.isLoading ? <EstadoCarga /> : <PushEventsTable items={query.data?.items ?? []} onDetail={setSelected} />}
         <EventPagination
           page={page}
           pageSize={pageSize}
@@ -40,6 +45,7 @@ export function PushEventsPage() {
           onPageSizeChange={(nextPageSize) => setFilters((current) => ({ ...current, page: 1, pageSize: nextPageSize }))}
         />
       </div>
+      <EventDetailDrawer item={selected} onClose={() => setSelected(null)} />
     </EventsLayout>
   );
 }

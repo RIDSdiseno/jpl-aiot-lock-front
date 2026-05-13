@@ -1,18 +1,20 @@
+import { useAppText } from "../../../../i18n/text";
 import { EventEmptyState } from "../../components/EventEmptyState";
 import { EventStatusBadge } from "../../components/EventStatusBadge";
 import type { PushEventItem } from "../../types/events.types";
 
-export function PushEventsTable({ items }: { items: PushEventItem[] }) {
+export function PushEventsTable({ items, onDetail }: { items: PushEventItem[]; onDetail: (item: PushEventItem) => void }) {
+  const tr = useAppText();
   if (!items.length) return <EventEmptyState />;
+
+  const headers = ["", "#", "Device ID", "Affiliated company", "Push type", "Sending event type", "Send to", "Sending status", "Sending content", "Sendtime", "Detail"];
 
   return (
     <div className="overflow-x-auto bg-white">
       <table className="min-w-[1120px] divide-y divide-slate-200 text-sm">
         <thead className="bg-slate-50 text-left text-xs font-semibold uppercase text-slate-500">
           <tr>
-            {["", "Sort No.", "Device ID", "Affiliated company", "Push type", "Sending event type", "Send to", "Sending status", "Sending content", "Sendtime"].map((title) => (
-              <th className="px-4 py-3" key={title}>{title}</th>
-            ))}
+            {headers.map((title) => <th className="px-4 py-3" key={title}>{tr(title)}</th>)}
           </tr>
         </thead>
         <tbody className="divide-y divide-slate-100">
@@ -28,6 +30,7 @@ export function PushEventsTable({ items }: { items: PushEventItem[] }) {
               <td className="px-4 py-3"><EventStatusBadge status={item.sendingStatus} /></td>
               <td className="max-w-72 truncate px-4 py-3" title={item.sendingContent}>{item.sendingContent}</td>
               <td className="px-4 py-3 whitespace-nowrap">{formatDate(item.sendTime)}</td>
+              <td className="px-4 py-3"><button className="text-blue-700 hover:underline" onClick={() => onDetail(item)} type="button">{tr("Detail")}</button></td>
             </tr>
           ))}
         </tbody>

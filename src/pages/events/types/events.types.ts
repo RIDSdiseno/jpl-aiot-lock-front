@@ -27,6 +27,7 @@ export interface DeviceEventItem {
   productModel?: string;
   gpsTime?: string;
   batteryLevel?: number;
+  eventName?: string;
   events?: string;
   eventType: DeviceEventType | string;
   lockStatus?: string;
@@ -34,6 +35,9 @@ export interface DeviceEventItem {
   latitude?: number;
   longitude?: number;
   locationText?: string;
+  eventImageUrl?: string | null;
+  description?: string;
+  source?: string;
   operatingInfo?: string;
   severity?: EventSeverity;
   rawPayload?: unknown;
@@ -42,13 +46,16 @@ export interface DeviceEventItem {
 
 export interface AlarmEventItem {
   id: string;
+  eventId?: string;
   sortNo?: number;
   deviceId: string;
   deviceName?: string;
   productModel?: string;
   gpsTime?: string;
   batteryLevel?: number;
-  alarmEvent: string;
+  alarmType: string;
+  alarmEvent?: string;
+  alarmLevel: "LOW" | "MEDIUM" | "HIGH" | "CRITICAL";
   alarmReason?: string;
   operatingInfo?: string;
   lockStatus?: string;
@@ -56,8 +63,12 @@ export interface AlarmEventItem {
   latitude?: number;
   longitude?: number;
   locationText?: string;
-  severity: EventSeverity;
-  handledStatus?: "NEW" | "ACKNOWLEDGED" | "RESOLVED" | "IGNORED";
+  eventImageUrl?: string | null;
+  description?: string;
+  status: "NEW" | "REVIEWED" | "RESOLVED" | "DISMISSED";
+  severity?: EventSeverity;
+  handledStatus?: "NEW" | "REVIEWED" | "RESOLVED" | "DISMISSED";
+  rawPayload?: unknown;
   createdAt: string;
 }
 
@@ -66,10 +77,10 @@ export interface PushEventItem {
   sortNo?: number;
   deviceId: string;
   affiliatedCompany: string;
-  pushType: "E-mail" | "SMS" | "Webhook" | string;
+  pushType: "E-mail" | "App Push" | "SMS" | "Webhook" | string;
   sendingEventType: string;
   sendTo: string;
-  sendingStatus: "PENDING" | "SENT" | "FAILED" | "UNKNOWN" | string;
+  sendingStatus: "PENDING" | "SENT" | "FAILED" | "RETRYING" | "UNKNOWN" | string;
   sendingContent: string;
   sendTime: string;
   createdAt: string;
@@ -80,14 +91,22 @@ export interface EventQueryParams {
   deviceId?: string;
   gpsTimeFrom?: string;
   gpsTimeTo?: string;
+  startDate?: string;
+  endDate?: string;
   eventType?: string;
+  alarmType?: string;
   alarmEvent?: string;
   dataType?: string;
   affiliatedCompany?: string;
   sendTimeFrom?: string;
   sendTimeTo?: string;
+  pushType?: string;
+  sendingStatus?: string;
+  sortBy?: string;
+  sortOrder?: "ASC" | "DESC";
   page?: number;
   pageSize?: number;
+  limit?: number;
 }
 
 export interface PaginatedResponse<T> {
@@ -95,4 +114,14 @@ export interface PaginatedResponse<T> {
   total: number;
   page: number;
   pageSize: number;
+}
+
+export interface EventOptions {
+  productModels: string[];
+  eventTypes: string[];
+  alarmTypes: string[];
+  dataTypes: string[];
+  lockStatuses: string[];
+  pushTypes: string[];
+  pushStatuses: string[];
 }

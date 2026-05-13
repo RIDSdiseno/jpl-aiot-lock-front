@@ -1,3 +1,5 @@
+import { translateAlarmLevel } from "../../../i18n/enums";
+import { useI18n } from "../../../i18n/i18nStore";
 import type { EventSeverity } from "../types/events.types";
 
 const styles: Record<EventSeverity, string> = {
@@ -9,6 +11,7 @@ const styles: Record<EventSeverity, string> = {
 };
 
 export function EventSeverityBadge({ severity }: { severity?: EventSeverity }) {
+  const language = useI18n((state) => state.language);
   const value = severity || "INFO";
-  return <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ring-1 ${styles[value]}`}>{value}</span>;
+  return <span className={`inline-flex rounded-full px-2 py-1 text-xs font-semibold ring-1 ${styles[value]}`}>{translateAlarmLevel(language, value)}</span>;
 }
